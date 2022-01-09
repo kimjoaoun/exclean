@@ -2,7 +2,7 @@
 
 A toolkit for data cleaning in Elixir based in R's janitor package.
 
-Exclean is a project written while I'm studying Elixir, breaking changes may occour.
+Exclean is a project written while I'm studying Elixir, it is not meant to be in production.
 
 ## Installation
 

@@ -3,7 +3,6 @@ defmodule Exclean do
   Documentation for `Exclean`.
   """
 
-@spec clean_names(Explorer.DataFrame.t(), <<_::40, _::_*24>>) :: Explorer.DataFrame.t()
 @doc """
 Clean Names
 
@@ -21,7 +20,7 @@ Clean Names
     |> Explorer.DataFrame.names()
     |> Enum.map(&Recase.to_snake(&1))
 
-    Explorer.DataFrame.rename(df, names)
+    {:ok, Explorer.DataFrame.rename(df, names)}
   end
 
   def clean_names(df, "title") do
@@ -29,7 +28,7 @@ Clean Names
     |> Explorer.DataFrame.names()
     |> Enum.map(&Recase.to_title(&1))
 
-    Explorer.DataFrame.rename(df, names)
+    {:ok, Explorer.DataFrame.rename(df, names)}
   end
 
   def clean_names(df, "camel") do
@@ -37,7 +36,7 @@ Clean Names
     |> Explorer.DataFrame.names()
     |> Enum.map(&Recase.to_camel(&1))
 
-    Explorer.DataFrame.rename(df, names)
+    {:ok, Explorer.DataFrame.rename(df, names)}
   end
 
   def clean_names(df, "constant") do
@@ -45,16 +44,32 @@ Clean Names
     |> Explorer.DataFrame.names()
     |> Enum.map(&Recase.to_constant(&1))
 
-    Explorer.DataFrame.rename(df, names)
+    {:ok, Explorer.DataFrame.rename(df, names)}
   end
 
-@spec row_to_names(Explorer.DataFrame.t(), integer()) :: Explorer.DataFrame.t()
-  def row_to_names(df, row_n) do
+  def row_to_names(df, row_n) when is_integer(row_n) do
     new_names = df
     |> Explorer.DataFrame.slice(row_n, 1)
     |> Explorer.DataFrame.to_map()
     |> Map.values()
 
-    Explorer.DataFrame.rename(df, new_names)
+    {:ok, Explorer.DataFrame.rename(df, new_names)}
   end
+
+  def row_to_names(df, "first") do
+    {:ok, row_to_names(df, 0)}
+  end
+
+  #def convert_to_nil() do
+  #  IO.inspect("Not implemented yet")
+  #end
+
+  #def convert_to_date() do
+  #  IO.inspect("Not implemented yet")
+  #end
+
+  #def remove_empty_rows() do
+  #  IO.inspect("Not implemented yet")
+  #end
+
 end
