@@ -18,32 +18,33 @@ Clean Names
   def clean_names(df, "snake") do
     names = df
     |> Explorer.DataFrame.names()
-    |> Enum.map(&String.replace(&1, ~r/(\.|\s)/, "_"))
-    |> Enum.map(&String.downcase(&1))
+    |> Enum.map(&Recase.to_snake(&1))
 
     Explorer.DataFrame.rename(df, names)
-  end
-
-  defp camel_maker(list) do
-    list
-    |> Enum.chunk_very(1)
-    |> Enum.map(&String.capitalize(&1))
   end
 
   def clean_names(df, "title") do
     names = df
     |> Explorer.DataFrame.names()
-    |> Enum.map(&String.replace(&1, ~r/(\.|\s)/, "_"))
-    |> Enum.map(&String.downcase(&1))
-    |> Enum.map(&String.capitalize(&1))
+    |> Enum.map(&Recase.to_title(&1))
 
     Explorer.DataFrame.rename(df, names)
   end
+
+  def clean_names(df, "camel") do
+    names = df
+    |> Explorer.DataFrame.names()
+    |> Enum.map(&Recase.to_camel(&1))
+
+    Explorer.DataFrame.rename(df, names)
   end
 
-  def clean_names(df, "title") do
+  def clean_names(df, "constant") do
+    names = df
+    |> Explorer.DataFrame.names()
+    |> Enum.map(&Recase.to_constant(&1))
 
+    Explorer.DataFrame.rename(df, names)
   end
-
 
 end
