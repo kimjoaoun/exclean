@@ -47,4 +47,13 @@ Clean Names
     Explorer.DataFrame.rename(df, names)
   end
 
+  @spec row_to_names(Explorer.DataFrame.t(), integer()) :: Explorer.DataFrame.t()
+  def row_to_names(df, row_n) do
+    new_names = df
+    |> Explorer.DataFrame.slice(row_n, 1)
+    |> Explorer.DataFrame.to_map()
+    |> Map.values()
+
+    Explorer.DataFrame.rename(df, new_names)
+  end
 end
