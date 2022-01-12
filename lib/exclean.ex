@@ -61,6 +61,7 @@ Clean Names
   end
 
 
+
   defp convert_empty(x) do
     case x do
       {""} -> :nil
@@ -68,17 +69,17 @@ Clean Names
     end
   end
 
-  def convert_to_nil(df, column_name) when is_atom(column_name) do
+  def empty_to_nil(df, column_name) when is_atom(column_name) do
     clean_column =
       df
-    |> Explorer.DataFrame.pull(column_name)
-    |> Explorer.Series.to_list()
-    |> Enum.map(&convert_empty/1)
-    |> Explorer.Series.from_list()
+      |> Explorer.DataFrame.pull(column_name)
+      |> Explorer.Series.to_list()
+      |> Enum.map(&convert_empty/1)
+      |> Explorer.Series.from_list()
 
     df =
       df
-    |> Explorer.DataFrame.mutate(%{column_name => clean_column})
+      |> Explorer.DataFrame.mutate(%{column_name => clean_column})
 
     {:ok, df}
   end
