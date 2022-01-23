@@ -20,7 +20,7 @@ Clean Names
     |> Explorer.DataFrame.names()
     |> Enum.map(&Recase.to_snake(&1))
 
-    {:ok, Explorer.DataFrame.rename(df, names)}
+    Explorer.DataFrame.rename(df, names)
   end
 
   def clean_names(df, "title") do
@@ -28,7 +28,7 @@ Clean Names
     |> Explorer.DataFrame.names()
     |> Enum.map(&Recase.to_title(&1))
 
-    {:ok, Explorer.DataFrame.rename(df, names)}
+    Explorer.DataFrame.rename(df, names)
   end
 
   def clean_names(df, "camel") do
@@ -36,7 +36,7 @@ Clean Names
     |> Explorer.DataFrame.names()
     |> Enum.map(&Recase.to_camel(&1))
 
-    {:ok, Explorer.DataFrame.rename(df, names)}
+    Explorer.DataFrame.rename(df, names)
   end
 
   def clean_names(df, "constant") do
@@ -44,7 +44,7 @@ Clean Names
     |> Explorer.DataFrame.names()
     |> Enum.map(&Recase.to_constant(&1))
 
-    {:ok, Explorer.DataFrame.rename(df, names)}
+    Explorer.DataFrame.rename(df, names)
   end
 
   def row_to_names(df, row_n) when is_integer(row_n) do
@@ -53,11 +53,11 @@ Clean Names
     |> Explorer.DataFrame.to_map()
     |> Map.values()
 
-    {:ok, Explorer.DataFrame.rename(df, new_names)}
+    Explorer.DataFrame.rename(df, new_names)
   end
 
   def row_to_names(df, "first") do
-    {:ok, row_to_names(df, 0)}
+    row_to_names(df, 0)
   end
 
 
@@ -77,11 +77,8 @@ Clean Names
       |> Enum.map(&convert_empty/1)
       |> Explorer.Series.from_list()
 
-    df =
       df
       |> Explorer.DataFrame.mutate(%{column_name => clean_column})
-
-    {:ok, df}
   end
 
 
